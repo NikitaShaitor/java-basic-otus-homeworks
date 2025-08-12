@@ -4,6 +4,7 @@ public class Homework1 {
     public static void main(String[] args) {
         greetings();
         checkSign(1, 2, 3);
+        selectColor(5);
     }
 
     public static void greetings() {
@@ -21,5 +22,15 @@ public class Homework1 {
         else
             System.out.println("Сумма отрицательная");
 
+    }
+
+    public static void selectColor(int data) {
+        if (data <= 20 && data >= 10) {
+            System.out.println("Желтый");
+        } else if (data < 10) {
+            System.out.println("Зеленый");
+        } else {
+            System.out.println("Зеленый");
+        }
     }
 }
