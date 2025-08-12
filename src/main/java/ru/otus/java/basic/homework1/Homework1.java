@@ -6,6 +6,7 @@ public class Homework1 {
         checkSign(1, 2, 3);
         selectColor(5);
         compareNumbers(7, 2);
+        addOrSubtractAndPrint(14, 2, true);
     }
 
     public static void greetings() {
@@ -40,6 +41,16 @@ public class Homework1 {
             System.out.println("a >= b");
         } else {
             System.out.println("a < b");
+        }
+    }
+
+    public static void addOrSubtractAndPrint(int initValue, int delta, boolean increment) {
+        if (increment){
+            int c = initValue + delta;
+            System.out.println(c);
+        } else {
+            int d = initValue - delta;
+            System.out.println(d);
         }
 
     }
