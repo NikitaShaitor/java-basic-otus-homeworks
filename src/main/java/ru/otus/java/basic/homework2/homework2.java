@@ -27,6 +27,8 @@ public class homework2 {
             balanceFinder(new int[]{9, 4});
         } else if (choise == 7) {
             ascendingArrays(new int[]{1, 2, 3, 4});
+        } else if (choise == 8) {
+            arraysReverse();
         }
     }
 
@@ -146,7 +148,7 @@ public class homework2 {
                     }
                 }
             }
-        } else if ( ascending == 2) {
+        } else if (ascending == 2) {
             for (int i = 0; i < arrays.length - 1; i++) {
                 for (int j = i + 1; j < arrays.length; j++) {
                     if (arrays[i] > arrays[j]) {
@@ -160,5 +162,21 @@ public class homework2 {
             }
 
         }
+    }
+
+    public static void arraysReverse() {
+        int[] arr = {1, 2, 3, 4};
+        System.out.println("Исходный массив:" + Arrays.toString(arr));
+        int left = 0;
+        int right = arr.length - 1;
+
+        while (left < right) {
+            int temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+            left++;
+            right--;
+        }
+        System.out.println("Перевёрнутый массив: " + Arrays.toString(arr));
     }
 }
