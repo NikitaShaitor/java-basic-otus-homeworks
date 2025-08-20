@@ -116,12 +116,11 @@ public class homework2 {
         }
         for (int i = 0; i < arrays.length; i++) {
             rightSum -= arrays[i];
-
+            leftSum += arrays[i];
             if (leftSum == rightSum) {
                 System.out.println("true");
                 return;
             }
-            leftSum += arrays[i];
         }
         System.out.println("false");
     }
