@@ -121,6 +121,7 @@ public class homework2 {
                 System.out.println("true");
                 return;
             }
+
         }
         System.out.println("false");
     }
