@@ -8,7 +8,7 @@ public class homework2 {
         // Выбор для заданий
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nВыбери какое задание хочешь посмотреть:\n1) lineOutput - выводится строка столько раз сколько захочешь\n2) sumArray - Считается сумма всего массива\n3) numberArray - заполнение массива числом\n4) Сумма половины массива ");
-        System.out.println("\nЗадания повышенной сложности (со звёздочкой): \n5) Новый метод равный сумме входящих\n6) Проверка что в массиве есть точка\n7) Проверка массива на возростание или убывание");
+        System.out.println("\nЗадания повышенной сложности (со звёздочкой): \n5) Новый метод равный сумме входящих\n6) Проверка что в массиве есть точка\n7) Проверка массива на возрастание или убывание\n8) Реверс (переворот) массива");
         int choise = scanner.nextInt();
         if (choise == 1) {
             lineOutput();
@@ -28,7 +28,7 @@ public class homework2 {
         } else if (choise == 7) {
             ascendingArrays(new int[]{1, 2, 3, 4});
         } else if (choise == 8) {
-            arraysReverse();
+            arraysReverse(new int[]{1, 2, 3, 4});
         }
     }
 
@@ -90,9 +90,10 @@ public class homework2 {
         int[] secondArray = {4, 2, 3};
         int[] thirdArray = {7, 9, 3, 4};
 
-        int maxSize = Math.max(Math.max(firsArray.length, secondArray.length), thirdArray.length);
-        int[] resultArray = new int[maxSize];
+        int maxSize = Math.max(Math.max(firsArray.length, secondArray.length), thirdArray.length); // Взял для нового массива максимальный размер от начальных массивов
+        int[] resultArray = new int[maxSize]; // дал новому массиву максимальную длину
 
+        // Ниже сложил все числа под максимальную длину
         for (int i = 0; i < maxSize; i++) {
             if (i < firsArray.length) {
                 resultArray[i] += firsArray[i];
@@ -108,7 +109,7 @@ public class homework2 {
     }
 
     public static void balanceFinder(int[] arrays) {
-        if (arrays.length <= 1) {
+        if (arrays.length <= 1) { // Тут всегда будет false
             System.out.println("false");
             return;
         }
@@ -116,12 +117,12 @@ public class homework2 {
         int rightSum = 0;
 
         for (int i = arrays.length - 1; i >= 0; i--) {
-            rightSum += arrays[i];
+            rightSum += arrays[i]; // Сложил всю сумму
         }
         for (int i = 0; i < arrays.length; i++) {
             rightSum -= arrays[i];
-            leftSum += arrays[i];
-            if (leftSum == rightSum) {
+            leftSum += arrays[i]; // тут пошёл слева на право и начал вычитать из суммы которую получил раннее и складывать в новую сумму
+            if (leftSum == rightSum) { // когда дошёл до нужной точки выдал true
                 System.out.println("true");
                 return;
             }
@@ -131,15 +132,15 @@ public class homework2 {
     }
 
     public static void ascendingArrays(int[] arrays) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in); // Дал выбор как хочет проверить массив пользователь
         System.out.println("Как хочешь проверить массив:\n1) По возрастанию\n2) По убыванию");
         int ascending = scanner.nextInt();
 
 
         if (ascending == 1) {
             for (int i = 0; i < arrays.length - 1; i++) {
-                for (int j = i + 1; j < arrays.length; j++) {
-                    if (arrays[i] < arrays[j]) {
+                for (int j = i + 1; j < arrays.length; j++) { // тут начал сравнивать по индексу 0 и 1 (с шагом +1) значения пока не закончится массив
+                    if (arrays[i] < arrays[j]) { // поставил условия для возрастания
                         System.out.println("Правда");
                         return;
                     } else {
@@ -150,8 +151,8 @@ public class homework2 {
             }
         } else if (ascending == 2) {
             for (int i = 0; i < arrays.length - 1; i++) {
-                for (int j = i + 1; j < arrays.length; j++) {
-                    if (arrays[i] > arrays[j]) {
+                for (int j = i + 1; j < arrays.length; j++) { // тут аналогичное сравнение
+                    if (arrays[i] > arrays[j]) { // поставил условия для убывания
                         System.out.println("Правда");
                         return;
                     } else {
@@ -164,19 +165,18 @@ public class homework2 {
         }
     }
 
-    public static void arraysReverse() {
-        int[] arr = {1, 2, 3, 4};
-        System.out.println("Исходный массив:" + Arrays.toString(arr));
+    public static void arraysReverse(int[] arr) {
+        System.out.println("Исходный массив:" + Arrays.toString(arr)); // для наглядности дал исходный массив
         int left = 0;
-        int right = arr.length - 1;
+        int right = arr.length - 1; // отнял индекс, что бы взять последнее значение
 
-        while (left < right) {
+        while (left < right) { // начал менять местами пока слева не станет больше чем справа
             int temp = arr[left];
             arr[left] = arr[right];
             arr[right] = temp;
-            left++;
-            right--;
+            left++; // двигаюсь
+            right--; // двигаюсь
         }
-        System.out.println("Перевёрнутый массив: " + Arrays.toString(arr));
+        System.out.println("Перевёрнутый массив: " + Arrays.toString(arr)); // выдал перевернутый массив
     }
 }
