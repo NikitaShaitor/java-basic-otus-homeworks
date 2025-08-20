@@ -7,7 +7,8 @@ public class homework2 {
     public static void main(String[] args) {
         // Выбор для заданий
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Выбери какое задание хочешь посмотреть:\n1) lineOutput - выводится строка столько раз сколько захочешь\n2) sumArray - Считается сумма всего массива\n3) numberArray - заполнение массива числом\n4) Сумма половины массива ");
+        System.out.println("\nВыбери какое задание хочешь посмотреть:\n1) lineOutput - выводится строка столько раз сколько захочешь\n2) sumArray - Считается сумма всего массива\n3) numberArray - заполнение массива числом\n4) Сумма половины массива ");
+        System.out.println("\nЗадания повышенной сложности (со звёздочкой): \n5) Новый метод равный сумме входящих");
         int choise = scanner.nextInt();
         if (choise == 1) {
             lineOutput();
@@ -17,6 +18,8 @@ public class homework2 {
             numberArray();
         } else if (choise == 4) {
             halfSumArray();
+        } else if (choise == 5) {
+            arrNew();
         }
     }
 
@@ -66,10 +69,30 @@ public class homework2 {
         for (int i = arr.length / 2; i < arr.length; i++) { // Прошелся по второй половины длины массива. И сумму закинул в переменную sum2
             sum2 += arr[i];
         }
-        if (sum1 > sum2){ // Сравнил суммы
+        if (sum1 > sum2) { // Сравнил суммы
             System.out.println("Сумма первой половины больше и ровна: " + sum1); // Если первая половина больше, то вывожу данный текс
         } else {
             System.out.println("Сумма второй половины больше и ровна: " + sum2); // Если вторая половина больше, то вывожу данный текс
         }
+    }
+
+    public static void arrNew() {
+        int[] firsArray = {5, 1, 2, 3, 5};
+        int[] secondArray = {4, 2, 3};
+        int[] thirdArray = {7, 9, 3, 4};
+
+        int maxSize = Math.max(Math.max(firsArray.length,secondArray.length),thirdArray.length);
+        int[] resultArray = new int [maxSize];
+
+        for (int i = 0; i < maxSize; i++) {
+            if (i < firsArray.length) {
+                resultArray[i] += firsArray[i];
+            }if (i < secondArray.length) {
+                resultArray[i] += secondArray[i];
+            }if (i < thirdArray.length) {
+                resultArray[i] += thirdArray[i];
+            }
+        }
+        System.out.println("Итоговый массив: " + Arrays.toString(resultArray));
     }
 }
