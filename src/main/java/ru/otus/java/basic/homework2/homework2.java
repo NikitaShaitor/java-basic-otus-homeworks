@@ -8,7 +8,7 @@ public class homework2 {
         // Выбор для заданий
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nВыбери какое задание хочешь посмотреть:\n1) lineOutput - выводится строка столько раз сколько захочешь\n2) sumArray - Считается сумма всего массива\n3) numberArray - заполнение массива числом\n4) Сумма половины массива ");
-        System.out.println("\nЗадания повышенной сложности (со звёздочкой): \n5) Новый метод равный сумме входящих");
+        System.out.println("\nЗадания повышенной сложности (со звёздочкой): \n5) Новый метод равный сумме входящих\n6) Проверка что в массиве есть точка");
         int choise = scanner.nextInt();
         if (choise == 1) {
             lineOutput();
@@ -20,6 +20,11 @@ public class homework2 {
             halfSumArray();
         } else if (choise == 5) {
             arrNew();
+        } else if (choise == 6) {
+            balanceFinder(new int[]{1, 1, 1, 1, 3});
+            balanceFinder(new int[]{1, 1, 1, 3});
+            balanceFinder(new int[]{7, 2, 2, 2});
+            balanceFinder(new int[]{9, 4});
         }
     }
 
@@ -81,18 +86,43 @@ public class homework2 {
         int[] secondArray = {4, 2, 3};
         int[] thirdArray = {7, 9, 3, 4};
 
-        int maxSize = Math.max(Math.max(firsArray.length,secondArray.length),thirdArray.length);
-        int[] resultArray = new int [maxSize];
+        int maxSize = Math.max(Math.max(firsArray.length, secondArray.length), thirdArray.length);
+        int[] resultArray = new int[maxSize];
 
         for (int i = 0; i < maxSize; i++) {
             if (i < firsArray.length) {
                 resultArray[i] += firsArray[i];
-            }if (i < secondArray.length) {
+            }
+            if (i < secondArray.length) {
                 resultArray[i] += secondArray[i];
-            }if (i < thirdArray.length) {
+            }
+            if (i < thirdArray.length) {
                 resultArray[i] += thirdArray[i];
             }
         }
         System.out.println("Итоговый массив: " + Arrays.toString(resultArray));
+    }
+
+    public static void balanceFinder(int[] arrays) {
+        if (arrays.length <= 1) {
+            System.out.println("false");
+            return;
+        }
+        int leftSum = 0;
+        int rightSum = 0;
+
+        for (int i = arrays.length - 1; i >= 0; i--) {
+            rightSum += arrays[i];
+        }
+        for (int i = 0; i < arrays.length; i++) {
+            rightSum -= arrays[i];
+
+            if (leftSum == rightSum) {
+                System.out.println("true");
+                return;
+            }
+            leftSum += arrays[i];
+        }
+        System.out.println("false");
     }
 }
