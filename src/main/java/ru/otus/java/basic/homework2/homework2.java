@@ -8,7 +8,7 @@ public class homework2 {
         // Выбор для заданий
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nВыбери какое задание хочешь посмотреть:\n1) lineOutput - выводится строка столько раз сколько захочешь\n2) sumArray - Считается сумма всего массива\n3) numberArray - заполнение массива числом\n4) Сумма половины массива ");
-        System.out.println("\nЗадания повышенной сложности (со звёздочкой): \n5) Новый метод равный сумме входящих\n6) Проверка что в массиве есть точка");
+        System.out.println("\nЗадания повышенной сложности (со звёздочкой): \n5) Новый метод равный сумме входящих\n6) Проверка что в массиве есть точка\n7) Проверка массива на возростание или убывание");
         int choise = scanner.nextInt();
         if (choise == 1) {
             lineOutput();
@@ -25,6 +25,8 @@ public class homework2 {
             balanceFinder(new int[]{1, 1, 1, 3});
             balanceFinder(new int[]{7, 2, 2, 2});
             balanceFinder(new int[]{9, 4});
+        } else if (choise == 7) {
+            ascendingArrays(new int[]{1, 2, 3, 4});
         }
     }
 
@@ -124,5 +126,39 @@ public class homework2 {
 
         }
         System.out.println("false");
+    }
+
+    public static void ascendingArrays(int[] arrays) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Как хочешь проверить массив:\n1) По возрастанию\n2) По убыванию");
+        int ascending = scanner.nextInt();
+
+
+        if (ascending == 1) {
+            for (int i = 0; i < arrays.length - 1; i++) {
+                for (int j = i + 1; j < arrays.length; j++) {
+                    if (arrays[i] < arrays[j]) {
+                        System.out.println("Правда");
+                        return;
+                    } else {
+                        System.out.println("Ложь");
+                        return;
+                    }
+                }
+            }
+        } else if ( ascending == 2) {
+            for (int i = 0; i < arrays.length - 1; i++) {
+                for (int j = i + 1; j < arrays.length; j++) {
+                    if (arrays[i] > arrays[j]) {
+                        System.out.println("Правда");
+                        return;
+                    } else {
+                        System.out.println("Ложь");
+                        return;
+                    }
+                }
+            }
+
+        }
     }
 }
