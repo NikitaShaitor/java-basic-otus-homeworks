@@ -9,7 +9,8 @@ public class homework3 {
         int choise = scanner.nextInt();
 
         if (choise == 1) {
-            sumOfPositiveElements();
+            int[][] arrayPos = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+            sumOfPositiveElements(arrayPos);
         } else if (choise == 2) {
             createBox(5);
         } else if (choise == 3) {
@@ -20,12 +21,12 @@ public class homework3 {
             System.out.println("\nПосле изменений");
             displayZeroDiagonals(arrayZero);
         } else if (choise == 4) {
-            int[][] array = {{1, 2, 3}, {-2, 5, 7}, {3, 2}};
+            int[][] array = {{-1, -2, -3}, {-2, -5, -7}, {-3, -2}};
             findMax(array);
             int result = findMax(array);
             System.out.println("Максимальное значение: " + result);
         } else if (choise == 5) {
-            int [][] array = {{1,2,3}, {1,7,10,8,4}, {10,2,6}, {123,614}};
+            int[][] array = {{1, 2, 3}, {1, 7, 10, 8, 4}, {10, 2, 6}, {123, 614}};
             if (array.length >= 2) {
                 sumElementsArray(array);
             } else {
@@ -35,14 +36,13 @@ public class homework3 {
         }
     }
 
-    public static void sumOfPositiveElements() {
-        int[][] array = {{1, -2, 5}, {8, 2, 6}, {12, -5, 1}};
+    public static void sumOfPositiveElements(int[][] arrayPos) {
 
         int sum = 0;
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                if (array[i][j] >= 0) {
-                    sum += array[i][j];
+        for (int i = 0; i < arrayPos.length; i++) {
+            for (int j = 0; j < arrayPos[i].length; j++) {
+                if (arrayPos[i][j] >= 0) {
+                    sum += arrayPos[i][j];
                 }
             }
         }
@@ -78,7 +78,7 @@ public class homework3 {
     }
 
     public static int findMax(int[][] array) {
-        int max = 0;
+        int max = array[0][0];
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[i].length; j++) {
                 if (array[i][j] > max) {
@@ -91,16 +91,12 @@ public class homework3 {
 
     public static int sumElementsArray(int[][] array) {
         if (array.length >= 2) {
-            int[] second = array[1];
-
-            int sum = 0;
-            for (int i = 0; i < second.length; i++) {
-                sum += second[i];
-            }
-            System.out.println("Сумма чисел второй строки: " + sum);
-            return sum;
-        } else {
             return -1;
         }
+        int sum = 0;
+        for (int i = 0; i < array[1].length; i++) {
+            sum += array[1][i];
+        }
+        return sum;
     }
 }
