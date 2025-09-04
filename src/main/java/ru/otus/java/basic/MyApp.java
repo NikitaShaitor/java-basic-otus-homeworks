@@ -18,6 +18,7 @@ public class MyApp {
         for (int i = 0; i < users.length; i++) {
             if (users[i].calculateAge() > 40) {
                 users[i].info();
+
             }
         }
     }
