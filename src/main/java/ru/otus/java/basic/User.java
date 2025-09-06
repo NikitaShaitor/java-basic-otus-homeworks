@@ -3,11 +3,11 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class User {
-    public String firstName;
-    public String lastName;
-    public String middleName;
-    public LocalDate yearBirth;
-    public String email;
+    private String firstName;
+    private String lastName;
+    private String middleName;
+    private LocalDate yearBirth;
+    private String email;
 
     public User(String firstName, String lastName, String middleName, String yearBirth, String email) {
         this.firstName = firstName;
