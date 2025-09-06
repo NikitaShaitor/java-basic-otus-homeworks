@@ -1,8 +1,5 @@
 package ru.otus.java.basic;
 
-import java.beans.JavaBean;
-import java.lang.annotation.Native;
-
 public class Box {
     private int length;
     private int width;
@@ -70,6 +67,10 @@ public class Box {
         }
     }
 
+    /**
+     * @apiNote Метод для взятия предмета из коробки
+     */
+
     public void getItem() {
         if (open && this.item != null) {
             System.out.println("Из коробки достали: " + item);
@@ -80,6 +81,10 @@ public class Box {
             System.out.println("В коробке ничего нет");
         }
     }
+
+    /**
+     * @apiNote Метод для показа инфо коробки
+     */
 
     public void showInfo() {
         System.out.println("Размеры\nШирина: " + width + "\nВысота: " + height + "\nДлина: " + length);
