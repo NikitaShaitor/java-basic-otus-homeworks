@@ -4,7 +4,8 @@ public class Dog extends Animal{
 
     final static int COST_SWIM = 2;
 
-    public Dog (String name, int speedRun, int endurance) {
+    public Dog (String name, double speedRun, int endurance) {
+
         super(name, speedRun, endurance);
     }
 
