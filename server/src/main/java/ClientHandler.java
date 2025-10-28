@@ -36,7 +36,7 @@ public class ClientHandler {
                             String[] parts = message.split(" ", 3);
                             if (parts.length >= 3) {
                                 String targetUsername = parts[1];
-                                String content = String.join(" ", Arrays.copyOfRange(parts, 2, parts.length));
+                                String content = parts [2];
                                 sendPrivateMessage(targetUsername, content);
 
                             } else {
