@@ -6,7 +6,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Server {
 
-    public ClientHandler[] client;
     private int port;
     private List<ClientHandler> clients;
 
@@ -47,6 +46,15 @@ public class Server {
 
         for (ClientHandler c : clients) {
             c.sendMessage(message);
+        }
+    }
+
+    protected void sendPrivateMessage(ClientHandler sender, String targetUsername, String message) {
+        for (ClientHandler handler : clients) {
+            if (handler.getUsername().equals(targetUsername)) {
+                handler.sendMessage(sender.getUsername() + " шепнул вам: " + message);
+                return;
+            }
         }
     }
 }
