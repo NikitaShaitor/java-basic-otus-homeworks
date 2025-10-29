@@ -53,7 +53,7 @@ public class Server {
     protected void sendPrivateMessage(ClientHandler sender, String targetUsername, String message) {
         for (ClientHandler handler : clients) {
             if (handler.getUsername().equals(targetUsername)) {
-                handler.sendMessage(sender.getUsername() + " шепнул вам: " + message);
+                handler.sendMessage("\033[1;36m" + sender.getUsername() + "\033[0m" + "\033[0;97m" + " шепнул вам: " + message + "\033[0m");
                 return;
             }
         }
