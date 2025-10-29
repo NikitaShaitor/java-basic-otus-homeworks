@@ -2,7 +2,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.Arrays;
 
 public class ClientHandler {
 
@@ -36,7 +35,8 @@ public class ClientHandler {
                             String[] parts = message.split(" ", 3);
                             if (parts.length >= 3) {
                                 String targetUsername = parts[1];
-                                String content = String.join(" ", Arrays.copyOfRange(parts, 2, parts.length));
+                                String content = parts[2];
+                                server.sendPrivateMessage(this, targetUsername, content);
                             } else {
                                 sendMessage("Неправильный формат команды '/w'. Используйте: /w <Имя пользователя> <Сообщение>");
                             }
@@ -97,15 +97,5 @@ public class ClientHandler {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private void sendPrivateMessage(String targetUsername, String message) {
-        for (ClientHandler handler : server.client) {
-            if (handler.getUsername().equals(targetUsername)) {
-                handler.sendMessage(username + " шепнул вам: " + message);
-                return;
-            }
-        }
-        sendMessage("Пользователь не найден");
     }
 }

@@ -49,4 +49,13 @@ public class Server {
             c.sendMessage(message);
         }
     }
+
+    protected void sendPrivateMessage(ClientHandler sender, String targetUsername, String message) {
+        for (ClientHandler handler : clients) {
+            if (handler.getUsername().equals(targetUsername)) {
+                handler.sendMessage(sender.getUsername() + " шепнул вам: " + message);
+                return;
+            }
+        }
+    }
 }
