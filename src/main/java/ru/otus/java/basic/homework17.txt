@@ -1,0 +1,65 @@
+CREATE TABLE tests (
+    id SERIAL PRIMARY KEY,
+    test_name VARCHAR(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE questions (
+    id SERIAL PRIMARY KEY,
+    question_text TEXT NOT NULL,
+    test_id INTEGER REFERENCES tests(id)
+);
+
+CREATE TABLE answer (
+    id SERIAL PRIMARY KEY,
+    answer_text TEXT NOT NULL,
+    is_correct BOOLEAN DEFAULT FALSE,
+    question_id INTEGER REFERENCES questions(id)
+);
+
+INSERT INTO tests (test_name)
+VALUES
+    ('Тест по столицам');
+
+INSERT INTO questions (question_text, test_id)
+VALUES
+    ('Столица России?', 1),
+    ('Столица Италии?', 1);
+
+INSERT INTO answer (answer_text, is_correct, question_id)
+VALUES
+    ('Москва', true, 1),
+    ('Ватикан', false, 1),
+    ('Вашингтон', false, 1),
+    ('Берлин', false, 1),
+    ('Рим', true, 2),
+    ('Москва', false, 2),
+    ('Франция', false, 2),
+    ('Осло', false, 2);
+
+SELECT * FROM tests;
+SELECT * FROM questions;
+SELECT * FROM answer;
+SELECT * FROM answer WHERE question_id = 1;
+SELECT * FROM answer WHERE question_id = 2;
+SELECT * FROM answer WHERE question_id = 3;
+SELECT * FROM answer WHERE question_id = 4;
+
+INSERT INTO tests (test_name)
+VALUES
+    ('Тест по географии');
+
+INSERT INTO questions (question_text, test_id)
+VALUES
+    ('Самая высокая гора в мире?', 2),
+    ('Самая глубока точка в мире?', 2);
+
+INSERT INTO answer (answer_text, is_correct, question_id)
+VALUES
+    ('Джомолунгма', true, 3),
+    ('Уральские горы', false, 3),
+    ('Чогори', false, 3),
+    ('Канченджанга', false, 3),
+    ('Марианский желоб', true, 4),
+    ('Алмазный карьер «Мир»', false, 4),
+    ('Вудингдинский колодец', false, 4),
+    ('Пещера Веревкина', false, 4);
