@@ -1,8 +1,7 @@
-package ru.otus.java.basic;
+public class ClientApp {
 
-public class MyApp {
     public static void main(String[] args) {
 
+        new Client();
     }
-
 }
