@@ -3,6 +3,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+enum Role {
+    USER,
+    ADMIN
+}
+
 public class ClientHandler {
 
     private Socket socket;
@@ -10,6 +15,8 @@ public class ClientHandler {
     private DataInputStream in;
     private DataOutputStream out;
     private String username;
+    private Role role = Role.USER;
+
 
     public ClientHandler(Socket socket, Server server) throws IOException {
 
@@ -40,6 +47,30 @@ public class ClientHandler {
                             } else {
                                 sendMessage("Неправильный формат команды '/w'. Используйте: /w <Имя пользователя> <Сообщение>");
                             }
+                        } else if (role == Role.ADMIN && message.startsWith("/kick")) {
+                            String[] parts = message.split(" ");
+                            if (parts.length > 1) {
+                                String targetUsername = parts[1].trim();
+
+                                boolean foundAndKicked = false;
+                                synchronized (server.client) {
+                                    for (ClientHandler ch : server.client) {
+                                        if (ch.getUsername().equals(targetUsername)) {
+                                            ch.disconnect();
+                                            foundAndKicked = true;
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                if (foundAndKicked) {
+                                    sendMessage("Пользователь: " + targetUsername + " успешно отлючен");
+                                } else {
+                                    sendMessage("Пользователь с именем: " + targetUsername + " не найден");
+                                }
+                            } else {
+                                sendMessage("Ошибка: неверный формат команды '/kick'. Пример правильного формата: /kick userName");
+                            }
                         }
                     } else {
                         server.broadcastMessage(username + ": " + message);
@@ -64,10 +95,12 @@ public class ClientHandler {
     }
 
     public String getUsername() {
+
         return username;
     }
 
     public void setUsername(String username) {
+
         this.username = username;
     }
 
