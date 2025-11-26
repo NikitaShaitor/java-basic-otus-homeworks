@@ -20,12 +20,19 @@ class Box<T extends Fruit> {
 
     @SuppressWarnings("unchecked")
     public void transferFruits(Box<? super T> targetBox) {
-        if (!targetBox.getClass().isAssignableFrom(getClass())) {
-            throw new IllegalArgumentException("Коробки разных типов!");
+        if (this == targetBox) {
+            return;
+        }
+
+        Class<?> sourceType = ((ArrayList<T>)fruits).getClass().getComponentType();
+        Class<?> targetType = ((ArrayList<?>)targetBox.fruits).getClass().getComponentType();
+
+        if (!targetType.isAssignableFrom(sourceType)) {
+            throw new IllegalArgumentException("Типы содержимого коробок несовместимы");
         }
 
         targetBox.fruits.addAll(fruits);
-        fruits.clear(); // Очищаем исходную коробку
+        fruits.clear();
     }
 
     public int countFruits() {
