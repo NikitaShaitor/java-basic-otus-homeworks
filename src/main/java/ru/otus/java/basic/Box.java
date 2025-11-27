@@ -19,25 +19,25 @@ class Box<T extends Fruit> {
     }
 
     @SuppressWarnings("unchecked")
+
     public void transferFruits(Box<? super T> targetBox) {
-        if (this == targetBox) {
+        if (this == targetBox || fruits.isEmpty()) {
             return;
         }
 
-        Class<?> sourceType = ((ArrayList<T>)fruits).getClass().getComponentType();
-        Class<?> targetType = ((ArrayList<?>)targetBox.fruits).getClass().getComponentType();
+        Class<?> sourceType = ((ArrayList<T>) fruits).getClass().getComponentType();
 
-        if (!targetType.isAssignableFrom(sourceType)) {
-            throw new IllegalArgumentException("Типы содержимого коробок несовместимы");
+        for (Object fruit : targetBox.fruits) {
+            if (!fruit.getClass().isAssignableFrom(sourceType)) {
+                throw new IllegalArgumentException("Типы содержимого коробок несовместимы");
+            }
+
+            targetBox.fruits.addAll(fruits);
+            fruits.clear();
         }
-
-        targetBox.fruits.addAll(fruits);
-        fruits.clear();
     }
 
     public int countFruits() {
         return fruits.size();
     }
-
 }
-
