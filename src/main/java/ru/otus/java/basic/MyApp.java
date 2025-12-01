@@ -11,16 +11,14 @@ public class MyApp {
         System.out.print("Password: ");
         String password = scanner.nextLine();
 
-        Base dbHelper = new Base();
-
         try {
-            if(dbHelper.authenticateUser(username, password)) {
+            if(Base.authenticateUser(username, password)) {
                 System.out.println("Аутентификация успешна!");
             } else {
                 System.out.println("Неверное имя пользователя или пароль.");
             }
         } catch(SQLException e) {
-            System.err.println("Ошибка подключения к базе данных: " + e.getMessage());
+            System.err.println("Ошибка базы данных: " + e.getMessage());
         }
     }
 }
