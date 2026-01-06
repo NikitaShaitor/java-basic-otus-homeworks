@@ -10,6 +10,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.otus.java.basic.application.CreateItemsProcessor;
+import ru.otus.java.basic.application.DeleteItemProcessor;
 import ru.otus.java.basic.application.GetItemsProcessor;
 import ru.otus.java.basic.exceptions_handling.BadRequestException;
 import ru.otus.java.basic.processors.*;
@@ -28,6 +29,7 @@ public class Dispatcher {
         routes.put("GET /add", new CalculatorProcessor());
         routes.put("GET /shop/api/v1/items", new GetItemsProcessor());
         routes.put("POST /shop/api/v1/items", new CreateItemsProcessor());
+        routes.put("DELETE /shop/api/v1/items", new DeleteItemProcessor());
         defaultNotFoundProcessor = new DefaultNotFoundProcessor();
         defaultStaticResourceProcessor = new DefaultStaticResourceProcessor();
     }
@@ -48,9 +50,11 @@ public class Dispatcher {
             routes.get(request.getRoutingKey()).execute(request, output);
         } catch (BadRequestException e) {
             logger.error("Ошибка обработки запроса: BAD REQUEST {}", e.getMessage());
+
             sendResponse(output, 400, "text/html", "<html><body><h1>BAD REQUEST: " + e.getMessage() + "</h1></body></html>");
         } catch (Exception e) {
             logger.error("Ошибка обработки запроса", e);
+
             sendResponse(output, 500, "text/html", "<html><body><h1>ОЙ</h1></body></html>");
         }
     }
