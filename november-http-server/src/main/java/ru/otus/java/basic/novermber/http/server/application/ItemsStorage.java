@@ -17,11 +17,16 @@ public class ItemsStorage {
     }
 
     public static List<Item> getItems() {
+
         return Collections.unmodifiableList(items);
     }
 
     public static void createItem(Item item) {
         item.setId(items.stream().mapToLong(Item::getId).max().orElse(0) + 1);
         items.add(item);
+    }
+
+    public static boolean deleteItem(long id) {
+        return items.removeIf(i -> i.getId() == id);
     }
 }

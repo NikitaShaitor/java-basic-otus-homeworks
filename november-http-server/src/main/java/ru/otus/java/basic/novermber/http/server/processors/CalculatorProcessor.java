@@ -10,12 +10,7 @@ import java.nio.charset.StandardCharsets;
 public class CalculatorProcessor implements RequestProcessor {
     @Override
     public void execute(HttpRequest request, OutputStream output) throws IOException {
-        // 200 OK
-        // 400 Bad Request
-        // 401 Unauthorized
-        // 403 Forbidden
-        // 404 Not Found
-        // 500 Internal Server Error
+
         int a, b;
         if (!request.containsParameter("a")) {
             throw new BadRequestException("В запросе отсутствует обязательный параметр запроса 'a'");
