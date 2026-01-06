@@ -36,4 +36,5 @@ public class CalculatorProcessor implements RequestProcessor {
                 "<html><body><h1>" + result + "</h1></body></html>";
         output.write(response.getBytes(StandardCharsets.UTF_8));
     }
+
 }

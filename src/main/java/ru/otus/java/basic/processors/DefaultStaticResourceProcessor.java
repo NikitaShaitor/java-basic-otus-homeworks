@@ -24,4 +24,5 @@ public class DefaultStaticResourceProcessor implements RequestProcessor {
         output.write(response.getBytes(StandardCharsets.UTF_8));
         output.write(fileData);
     }
+
 }

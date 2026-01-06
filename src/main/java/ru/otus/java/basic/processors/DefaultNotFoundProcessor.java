@@ -16,4 +16,5 @@ public class DefaultNotFoundProcessor implements RequestProcessor {
                 "<html><body><h1>Page Not Found</h1></body></html>";
         output.write(response.getBytes(StandardCharsets.UTF_8));
     }
+
 }

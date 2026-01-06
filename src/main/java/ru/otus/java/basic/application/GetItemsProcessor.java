@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import ru.otus.java.basic.HttpRequest;
 import ru.otus.java.basic.processors.RequestProcessor;
 
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
