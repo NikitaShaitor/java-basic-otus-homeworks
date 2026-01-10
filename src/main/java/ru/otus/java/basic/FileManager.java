@@ -2,9 +2,15 @@ package ru.otus.java.basic;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -12,7 +18,7 @@ public class FileManager {
     private static String CURRENT_DIR = System.getProperty("user.dir");
     private static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -168,17 +174,18 @@ public class FileManager {
         Files.copy(srcFile.toPath(), destFile.toPath());
     }
 
-    private static void fileInfo(String filename) {
+
+    private static void fileInfo(String filename) throws IOException {
         File file = new File(CURRENT_DIR, filename);
 
         if (!file.exists()) {
             throw new IllegalArgumentException("Файл не найден.");
         }
 
-        System.out.println("Filename: " + file.getName());
-        System.out.println("Size: " + file.length() + " bytes");
-        System.out.println("Последнее обновление " + sdf.format(new Date(file.lastModified())));
-        System.out.println("Тип каталога: " + file.isDirectory());
+        System.out.println("Имя файла: " + file.getName());
+        System.out.println("Размер: " + file.length() + " байт");
+        System.out.println("Тип каталога: " + (file.isDirectory() ? "Директория" : "Файл"));
+        System.out.println("Последнее изменение файла: " + getLastAccessTime(file));
     }
 
     private static void printHelp() {
@@ -213,5 +220,15 @@ public class FileManager {
                 }
             }
         }
+    }
+
+    public static String getLastAccessTime(File file) throws IOException {
+        Path path = file.toPath();
+        BasicFileAttributes attr = Files.readAttributes(path, BasicFileAttributes.class, LinkOption.NOFOLLOW_LINKS);
+
+        Instant instant = attr.lastAccessTime().toInstant();
+        LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+
+        return DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").format(ldt);
     }
 }
