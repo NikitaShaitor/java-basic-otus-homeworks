@@ -6,23 +6,38 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serial;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class FileManagerGUI extends JFrame implements ActionListener {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private static String CURRENT_DIR = System.getProperty("user.dir");
-    private static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-    JTextArea outputTextArea;
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    static JTextArea outputTextArea;
     JTextField inputField;
     JButton executeButton;
     JPanel panel;
 
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            new FileManagerGUI().setVisible(true);
+        });
+    }
+
     public FileManagerGUI() {
-        setTitle("Файловый Менеджер");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        super("Файловый Менеджер");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
         outputTextArea = new JTextArea();
@@ -41,7 +56,6 @@ public class FileManagerGUI extends JFrame implements ActionListener {
         setPreferredSize(new Dimension(800, 600));
         pack();
         setLocationRelativeTo(null);
-        setVisible(true);
     }
 
     @Override
@@ -58,7 +72,7 @@ public class FileManagerGUI extends JFrame implements ActionListener {
         }
     }
 
-    private void appendOutput(String text) {
+    private static void appendOutput(String text) {
         outputTextArea.append(text + "\n");
     }
 
@@ -66,7 +80,7 @@ public class FileManagerGUI extends JFrame implements ActionListener {
         outputTextArea.setText("");
     }
 
-    private void processCommand(String[] commandArgs) throws IOException {
+    private static void processCommand(String[] commandArgs) throws IOException {
         switch (commandArgs.length > 0 ? commandArgs[0].toLowerCase() : "") {
             case "ls":
                 listFiles(commandArgs.length > 1 && "-i".equals(commandArgs[1]));
@@ -100,7 +114,7 @@ public class FileManagerGUI extends JFrame implements ActionListener {
         }
     }
 
-    private void listFiles(boolean detailed) {
+    private static void listFiles(boolean detailed) {
         File dir = new File(CURRENT_DIR);
         File[] files = dir.listFiles();
 
@@ -112,8 +126,7 @@ public class FileManagerGUI extends JFrame implements ActionListener {
                     String sizeStr = f.isDirectory() ? "<DIR>" : Long.toString(f.length());
                     Date lastModified = new Date(f.lastModified());
 
-                    appendOutput(String.format("%-20s %8s %-20s\n",
-                            f.getName(), sizeStr, sdf.format(lastModified)));
+                    appendOutput(String.format("%-20s %8s %-20s", f.getName(), sizeStr, sdf.format(lastModified)));
                 }
             }
         }
@@ -196,25 +209,25 @@ public class FileManagerGUI extends JFrame implements ActionListener {
         Files.copy(srcFile.toPath(), destFile.toPath());
     }
 
-    private static void fileInfo(String filename) {
+    private static void fileInfo(String filename) throws IOException {
         File file = new File(CURRENT_DIR, filename);
 
         if (!file.exists()) {
             throw new IllegalArgumentException("Файл не найден.");
         }
 
-        System.out.println("Filename: " + file.getName());
-        System.out.println("Size: " + file.length() + " bytes");
-        System.out.println("Последнее обновление " + sdf.format(new Date(file.lastModified())));
-        System.out.println("Тип каталога: " + file.isDirectory());
+        appendOutput("Имя файла: " + file.getName());
+        appendOutput("Размер: " + file.length() + " байт");
+        appendOutput("Тип каталога: " + (file.isDirectory() ? "Директория" : "Файл"));
+        appendOutput("Последнее изменение файла: " + getLastAccessTime(file));
     }
 
-    private void findFile(String filename) {
-        File root = new File(System.getProperty("user.dir"));
+    private static void findFile(String filename) {
+        File root = new File(CURRENT_DIR);
         recursiveFind(root, filename);
     }
 
-    private void recursiveFind(File dir, String filename) {
+    private static void recursiveFind(File dir, String filename) {
         File[] files = dir.listFiles();
 
         if (files != null) {
@@ -229,7 +242,7 @@ public class FileManagerGUI extends JFrame implements ActionListener {
         }
     }
 
-    private void printHelp() {
+    private static void printHelp() {
         appendOutput("Доступные команды:");
         appendOutput("ls [-i]: Показать файлы в текущем каталоге (-i для деталей)");
         appendOutput("cd [путь]: Перейти в другой каталог (cd .. для перехода в родительскую директорию");
@@ -243,7 +256,14 @@ public class FileManagerGUI extends JFrame implements ActionListener {
         appendOutput("exit: Закрыть приложение");
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new FileManagerGUI());
+    public static String getLastAccessTime(File file) throws IOException {
+        Path path = file.toPath();
+        BasicFileAttributes attr = Files.readAttributes(path, BasicFileAttributes.class, LinkOption.NOFOLLOW_LINKS);
+
+        Instant instant = attr.lastAccessTime().toInstant();
+        LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+
+        return DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").format(ldt);
     }
+
 }
