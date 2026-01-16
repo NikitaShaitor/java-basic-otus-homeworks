@@ -5,6 +5,7 @@ import ru.otus.java.basic.application.ItemsStorage;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import static ru.otus.java.basic.Dispatcher.logger;
 
 public class HttpServer {
     private final int port;
@@ -18,7 +19,7 @@ public class HttpServer {
 
     public void start() {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
-            System.out.println("Сервер запущен на порту: " + port);
+            logger.info("Сервер запущен на порту: {}", port);
             while (true) {
                 try (Socket socket = serverSocket.accept()) {
                     byte[] buffer = new byte[8192];

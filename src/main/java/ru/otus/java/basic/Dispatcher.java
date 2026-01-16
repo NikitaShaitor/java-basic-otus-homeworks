@@ -17,7 +17,7 @@ import ru.otus.java.basic.processors.*;
 
 
 public class Dispatcher {
-    private static final Logger logger = LoggerFactory.getLogger(Dispatcher.class);
+    static final Logger logger = LoggerFactory.getLogger(Dispatcher.class);
     private Map<String, RequestProcessor> routes;
     private RequestProcessor defaultNotFoundProcessor;
     private RequestProcessor defaultStaticResourceProcessor;

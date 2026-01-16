@@ -2,6 +2,7 @@ package ru.otus.java.basic;
 
 import java.util.HashMap;
 import java.util.Map;
+import static ru.otus.java.basic.Dispatcher.logger;
 
 public class HttpRequest {
     private String rawRequest;
@@ -56,12 +57,13 @@ public class HttpRequest {
     }
 
     public void info(boolean showRawRequest) {
-        System.out.println("METHOD: " + method);
-        System.out.println("URI: " + uri);
-        System.out.println("PARAMS: " + params);
-        System.out.println("BODY: " + body);
+        logger.info("METHOD: {}", method);
+        logger.info("URI: {}", uri);
+        logger.info("PARAMS: {}", params);
+        logger.info("BODY: {}", body);
+
         if (showRawRequest) {
-            System.out.println(rawRequest);
+            logger.debug("RAW REQUEST:\n{}", rawRequest);
         }
     }
 }
